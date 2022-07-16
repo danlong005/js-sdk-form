@@ -1,0 +1,20 @@
+.hostedField {
+    border: 1px solid black;
+    height: 35px;
+    width:  250px;
+    border-radius: 3px;
+}
+
+.plainField {
+    border: 1px solid black;
+    border-radius: 3px;
+    height: 31px;
+    width: 238px;
+    outline-width: 0px;
+    padding-left: 10px;
+}
+
+.submitButton {
+    height: 35px;
+    width: 150px;
+}

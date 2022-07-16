@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            window.addEventListener("message", (event) => {
+                if (event.origin !== 'http://localhost:5500') return;
+                
+                let [command, data] = event.data.split("::");
+                if (command == null) {
+                    command = event.data;
+                }
+                if (data != '' && data != undefined) {
+                    try {
+                        data = JSON.parse(data);
+                    } catch (error) {}
+                } else {
+                    data = {};
+                }
+        
+                switch (command) {
+                    case "CardSetStyle": 
+                        document.getElementById("cardElement").style = data;
+                        break;
+
+                    case "CardSendValue":
+                        let card = document.getElementById("cardElement").value;
+                        parent.postMessage(`CardFrameValue::${card}`, '*');
+                        break;
+                }
+            }, false);
+        </script>
+
+        <input type="text" id="cardElement" />
+
+        <script>
+
+            parent.postMessage(`CardFrameLoaded`, '*');
+        </script>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <script>
+            window.addEventListener("message", (event) => {
+                if (event.origin !== 'http://localhost:5500') return;
+                
+                let [command, data] = event.data.split("::");
+                if (command == null) {
+                    command = event.data;
+                }
+                if (data != '' && data != undefined) {
+                    try {
+                        data = JSON.parse(data);
+                    } catch (error) {}
+                } else {
+                    data = {};
+                }
+        
+                switch (command) {
+                    case "CvvSetStyle": 
+                        document.getElementById("cvvElement").style = data;
+                        break;
+
+                    case "CvvSendValue":
+                        let cvv = document.getElementById("cvvElement").value;
+                        parent.postMessage(`CvvFrameValue::${cvv}`, '*');
+                        break;
+                }
+            }, false);
+        </script>
+
+        <input type="text" id="cvvElement" />
+
+        <script>
+            parent.postMessage("CvvFrameLoaded", '*');
+        </script>
+    </body>
+</html>

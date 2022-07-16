@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Page</title>
+        
+        <script src="thirdParty.js"></script>
+
+        
+        <link href="index.css" rel="stylesheet" />
+        <script>
+            function submitFunction() {
+                let formData = {
+                    expirationDate: document.getElementById("expirationDate").value,
+                    name: document.getElementById("name").value
+                };
+                ThirdParty.createCard(formData);
+            }
+
+            ThirdParty.onCompleted(function (e) {
+                console.log(e.detail);
+            });
+        </script>
+    </head>
+    <body>
+        <form method="post">
+            <table>
+                <tr>
+                    <td>Card Number</td>
+                    <td><div class="hostedField" id="cardNumber"></div></td>
+                </tr>
+                <tr>
+                    <td>Expiration Date</td>
+                    <td><input class="plainField" type="text" id="expirationDate" /></td>
+                </tr>
+                <tr>
+                    <td>Security Code</td>
+                    <td><div class="hostedField" id="securityCode"></div></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input class="plainField" type="text" id="name" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="button" onclick="submitFunction()" class="submitButton" >Submit</button>
+                    </td> 
+                </tr>
+            </table>
+        </form>
+
+        <script>
+            var config = {
+                cardElement: "cardNumber",
+                cardStyle: "border: none; outline-width: 0;",
+                cvvElement: "securityCode",
+                cvvStyle: "border: none; outline-width: 0;"
+            }
+
+            ThirdParty.setupForm(config);
+        </script>
+    </body>
+</html>
